@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>測試 poetry </h2>
+    <p>docker build -t two:latest -f project-two/Dockerfile . </p>
+    <p>docker run -it --name project-two -p 8080:80 two:latest</p>
+    <h3>安裝 poetry</h3>
+    <hr>
+    <p>安裝 poetry 插件，一定要搭配 `pyproject.toml` 檔案，要不然他會說這一句話 - Poetry could not find a pyproject.toml file in /srv or its parents</p>
+    
+    <p>找到問題了，我是腦殘，要記得 輸入 poetry install 來安裝整個插件</p>
+    <p>不過現在遇到另外一個問題，路徑怪怪的，導致 poetry 無法讀取到檔案，明天來解決這一件事情</p>
+    <p>這個問題可以看 https://github.com/python-poetry/poetry/issues/8662 這一篇文章解決</p>
+
+    <h3>poetry 使用細節</h3>
+    <p>如果今天你想要直接在 docker 裡面使用 poetry 安裝的 package，不想要進到 poetry shell 的環境，只要在 dockerfile 裡面多加這一段就可以 `ENV POETRY_VIRTUALENVS_CREATE=0`</p>
+    <p>這個指令的意思是，意義： 這個環境變數告訴 Poetry 不要自動創建虛擬環境。當這個變數設置為 0 時，Poetry 不會為你的項目自動創建虛擬環境，而是使用全局環境。</p>
+    <p>使用情境： 如果你希望在 Docker 容器中使用全局環境而不是虛擬環境，這是一個有用的設置。</p>
+    <p>多加這個指令，就可以當你進到 docker 檔案內後，輸入 poetry install 後，就可以直接使用輸入 pyproject.toml 內的 package</p>
+        
+</body>
+</html>
